@@ -6,9 +6,9 @@ player = (input("Choose \'X\' or \'O\':\n") == "X")
 B.isPlayerX(player)
 
 while B.playAgain:
-	B.update()
-	B.draw()
-	print()
-	
+    B.update()
+    B.draw()
+    print()
+
 
 print("END")
