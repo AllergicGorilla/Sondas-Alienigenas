@@ -1,8 +1,17 @@
 #!/usr/bin/python
 from board import board
 
+def getInputIf_X():
+    result = ""
+    while True:
+        result = input("Choose \'X\' or \'O\': ")
+        if result.upper() == "X":
+            return True
+        elif result.upper() == "O":
+            return False
+
 B = board()
-player = (input("Choose \'X\' or \'O\':\n") == "X")
+player = getInputIf_X()
 B.isPlayerX(player)
 
 while B.playAgain:
@@ -11,3 +20,5 @@ while B.playAgain:
 
 
 print("END")
+
+
