@@ -39,6 +39,7 @@ class board:
             print()
 
     def update(self):
+        self.draw()
         if self._isPlayerTurn:
             self.askPlayer()
         else:
@@ -73,6 +74,7 @@ class board:
                 self._matrix[y][x] = "-"
 
     def __finish(self, X_won):
+        self.draw()
         print("Player has won!") if (self.playerIsX == X_won) else print("AI has won!")
         self.clear()
         self._playAgain = False

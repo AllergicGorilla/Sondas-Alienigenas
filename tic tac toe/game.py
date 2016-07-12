@@ -7,7 +7,6 @@ B.isPlayerX(player)
 
 while B.playAgain:
     B.update()
-    B.draw()
     print()
 
 
