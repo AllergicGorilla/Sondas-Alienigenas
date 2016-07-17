@@ -1,8 +1,7 @@
 #include <iostream>
 #include "shader.h"
 #include <math.h>
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "simple_texture.h"
 
 // THIS IS OPTIONAL AND NOT REQUIRED, ONLY USE THIS IF YOU DON'T WANT GLAD TO INCLUDE windows.h
 // GLAD will include windows.h for APIENTRY if it was not previously defined.
@@ -52,27 +51,8 @@ int main()
 
   glViewport(0, 0, WIDTH, HEIGHT);
 
-  GLuint texture;
-  glGenTextures(1, &texture);
-  glBindTexture(GL_TEXTURE_2D, texture);
-  // Set the texture wrapping parameters
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  // Set texture filtering parameters
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  //Load image
-  int image_width, image_height, image_channels_per_pixel;
-  typedef unsigned char BYTE;
-  BYTE* image = stbi_load("runememe.png", &image_width, &image_height, &image_channels_per_pixel, 0);
-  if(image == NULL)
-    {
-      std::cout << "Unable to load image." << std::endl;
-    }
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image_width, image_height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-  glGenerateMipmap(GL_TEXTURE_2D);
-  stbi_image_free(image);
-  glBindTexture(GL_TEXTURE_2D, 0);
+  Texture runememe("rune_meme.jpg");
+  Texture awesomeface("awesomeface.png");
 
   //Two triangles
   GLfloat triangle_1[] =
@@ -244,7 +224,14 @@ int main()
 
 
       texture_shader.Use();
-      glBindTexture(GL_TEXTURE_2D, texture);
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_2D, runememe.ID);
+      glUniform1i(glGetUniformLocation(texture_shader.Program, "ourTexture1"), 0);
+
+      glActiveTexture(GL_TEXTURE1);
+      glBindTexture(GL_TEXTURE_2D, awesomeface.ID);
+      glUniform1i(glGetUniformLocation(texture_shader.Program, "ourTexture2"), 1);
+
       glBindVertexArray(VAO_square);
       glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
       glBindVertexArray(0);
