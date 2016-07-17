@@ -51,10 +51,9 @@ int main()
 
   glViewport(0, 0, WIDTH, HEIGHT);
 
-  Texture runememe("rune_meme.jpg");
-  Texture awesomeface("awesomeface.png");
+  Texture runememe("images/rune_meme.jpg");
+  Texture awesomeface("images/awesomeface.png");
 
-  //Two triangles
   GLfloat triangle_1[] =
     {
       0.4f, 0.8f, 0.0f,
@@ -185,7 +184,7 @@ int main()
   glBindVertexArray(0); // Unbind VAO_square (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO_square
 
   GLint vertexColorLocation = glGetUniformLocation(yellow_shader.Program, "ourColor");
-  // Game loop
+
   while (!glfwWindowShouldClose(window))
     {
       // Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
@@ -202,26 +201,19 @@ int main()
       glDrawArrays(GL_TRIANGLES, 0, 3);
       glBindVertexArray(0);
 
-
-
       yellow_shader.Use();
       GLfloat timeValue = glfwGetTime();
       GLfloat greenValue = (sin(timeValue) / 2) + 0.5;
 
       glUniform4f(vertexColorLocation, 1.0f, greenValue, 0.2f, 1.0f);
-
       glBindVertexArray(VAO_2);
       glDrawArrays(GL_TRIANGLES, 0, 3);
       glBindVertexArray(0);
-
-
-
 
       color_shader.Use();
       glBindVertexArray(VAO_3);
       glDrawArrays(GL_TRIANGLES, 0, 3);
       glBindVertexArray(0);
-
 
       texture_shader.Use();
       glActiveTexture(GL_TEXTURE0);
