@@ -4,8 +4,11 @@ layout (location = 1) in vec3 color;	// The color variable has attribute positio
   
 out vec3 ourColor; // Output a color to the fragment shader
 
+out vec3 pos;
+
 void main()
 {
-    gl_Position = vec4(position, 1.0);
-    ourColor = color; // Set ourColor to the input color we got from the vertex data
+	pos = position;
+	gl_Position = vec4(position.x, position.y, position.z, 1.0);
+	ourColor = color; // Set ourColor to the input color we got from the vertex data
 }
